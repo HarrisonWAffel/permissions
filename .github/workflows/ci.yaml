@@ -26,13 +26,13 @@ jobs:
       - name: pester
         run: Invoke-Pester -Show All
 
-      - name: Install go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 'stable'
+      - name: Install Security Module
+        run: Import-Module Microsoft.PowerShell.Security
 
       - name: go test
-        run: go test -v ./...
+        run: |
+          $env:PSModulePath = ''
+          go test -v ./...
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6.1.0
